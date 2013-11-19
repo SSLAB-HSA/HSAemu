@@ -3,8 +3,8 @@
 *.ko
 
 # Libraries
-*.lib
-*.a
+#*.lib
+#*.a
 
 # Shared objects (inc. Windows DLLs)
 *.dll
@@ -16,3 +16,18 @@
 *.exe
 *.out
 *.app
+
+#HSA
+*.d
+*.old
+*.hsa
+*.bin
+*.ptx
+*.hsail
+*.mk
+*.lo
+*.log
+*.status
+*/.deps/
+HSA_ENV_SETTING
+

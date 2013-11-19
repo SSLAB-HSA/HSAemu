@@ -1,0 +1,16 @@
+nb_cu=$1
+if [ -z $nb_cu ]; then
+	echo "use stage: $ runVM.sh <number of CU>"
+	nb_cu=8
+fi
+
+$qemu_dir/qemu-system-arm \
+	-kernel $kernel \
+	-initrd $file_system \
+	-drive if=sd,cache=writeback,file=$image \
+	-m $vm_mem \
+	-redir tcp:$vm_port::22 \
+	-cpu $vm_cpu \
+	-M $vm_board \
+	-hsacu $nb_cu \
+	$qemu_cmd

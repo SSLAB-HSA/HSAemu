@@ -1,0 +1,4 @@
+agent=$1
+kernel=$2
+echo "use state: $ script.sh <agent> <brig>"
+scp -P$vm_port $agent $kernel root@127.0.0.1:~

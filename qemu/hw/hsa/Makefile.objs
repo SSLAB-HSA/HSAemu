@@ -1,0 +1,1 @@
+obj-$(CONFIG_HSA) += hsa_component.o hsa_mntor.o hsa_cu.o hsa_helper.o hsa_linkloader.o

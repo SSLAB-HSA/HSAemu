@@ -1,0 +1,110 @@
+#####################################################
+#	How to compile HSAemu
+#####################################################
+
+***step1.***
+compile llvm-2.9
+1-1. download clang-2.9 and llvm-2.9
+1-2. move clang-2.9 to llvm-2.9/tools, and rename clang-2.9 to clang
+1-3. need modify:
+	llvm-2.9: <llvm-2.9 location>/lib/Support/Unix/Signals.inc
+	line 48, mask "SIGUSR1", because qemu uses this signal.
+1-4. run llvm/configure, then make
+
+***step2.***
+compile HSAemu
+2-1. run configure.sh <llvm-2.9 location>
+2-2. edit HSA_ENV_SETTING at hsaemu/ to setup QEMU and scripts
+2-3. then make (if miss some library, use script at /script/install_lib.sh)
+
+#####################################################
+#	other info
+#####################################################
+
+1. there are some usefull scripts at hsaemu/script/
+2. test environment: 
+	host OS: ubunt-12.04
+	guest OS: linaro-linux
+	gcc-4.4
+	g++-4.4
+	arm-linux-gnueabi-gcc-4.6
+	arm-linux-gnueabi-g++-4.6
+	llvm-2.9
+
+#####################################################
+#	HSA monitor info
+#####################################################
+
+	press "ctrl", "a" and "c" to enter QEMU monitro mod.
+	There are two options:
+		hsa_profile <level> -- show the profile data of HSAemu, when next time HSA component run.
+		                       The level is between 0 to 3.
+		hsa_reset           -- reset HSA profile counter.
+
+#####################################################
+#	HSA architecture specification info
+#####################################################
+
+Supported Features:
+
+ 1. Shared Virtual Memory:
+	HSAemu support it. Both host compute unit and HSA component have MMU, accessing same page table.
+
+ 2. User Mode Queuing:
+	Because "Memory-Based Signaling and Synchronization" is not support, "doorbellAddress" is no used in User Mode Queuing.
+
+ 3. Architected Queuing Language:
+	Sync function is not support.
+
+ 4. HSA Platform Topology Discovery:
+	HSAemu only can emulate an APU in system currently.
+
+Future Works:
+
+ 1. Cache Coherency Domains:
+	HSAemu don't emulate cache currently, so HSAemu not support it.
+
+ 2. Memory-Based Signaling and Synchronization:
+	not support currently.
+
+ 3. Preemptive HSA Component Context Switching:
+	not support currently.
+
+ 4. HSA Component IEEE754-2008 Floating Point Exception Reporting:
+	If host machine support IEEE754, then HSAemu support IEEE754.
+	Because "Memory-Based Signaling and Synchronization" is not support, float excepertion can't report to user application.
+
+ 5. HSA Component Hardware Debug Infrastructure:
+	HSAemu only support printing register values currently.
+
+ 6. Efficient Syscall Infrastructure:
+	not support currently.
+	
+#####################################################
+#       HSA runtime & driver specification info
+#####################################################
+
+	HSAemu only have runtime, and not follow specification yet.
+
+#####################################################
+#       HSA virtual ISA specification info
+#####################################################
+	
+	HSAemu support arithmetic, memory, branch, and part of synchronization operations.
+
+#####################################################
+#       author info
+#####################################################
+
+adviser:
+	Yeh-Ching Chung
+	Wei-Chung Hsu
+
+project manager:
+	Jiun-Hung Ding
+
+contributor:
+	Zhoudong Guo
+	Chung-Ming Kao
+	Bai-Cheng Jeng
+	Kuo-Min Lin
